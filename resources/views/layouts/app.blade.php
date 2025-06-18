@@ -9,14 +9,12 @@
     {{-- Bootstrap CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    {{-- Bootstrap Icons (Pastikan link ini benar) --}}
+    {{-- Bootstrap Icons --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap.css" rel="stylesheet"> {{-- Perbaiki: Ini seharusnya .css bukan .font.bootstrap.css --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     {{-- Font Awesome --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-    {{-- Tailwind CSS dari Breeze (jika menggunakan) --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js']) {{-- Ini akan mengkompilasi CSS dan JS Anda --}}
 
     @stack('styles')
 </head>
@@ -30,7 +28,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto"> {{-- me-auto agar item autentikasi di kanan --}}
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link {{ Request::routeIs('landing') ? 'active' : '' }}" aria-current="page" href="{{ route('landing') }}">Home</a>
                     </li>
@@ -38,43 +36,9 @@
                         <a class="nav-link {{ Request::routeIs('map.view') ? 'active' : '' }}" href="{{ route('map.view') }}">WebGIS</a>
                     </li>
                     <li class="nav-item">
+                        {{-- Link baru untuk halaman tabel --}}
                         <a class="nav-link {{ Request::routeIs('sekolah.table') ? 'active' : '' }}" href="{{ route('sekolah.table') }}">Data Tabel</a>
                     </li>
-                    {{-- Tambahkan link untuk CRUD jika pengguna sudah login --}}
-                    @auth
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::routeIs('sekolah.manage') ? 'active' : '' }}" href="{{ route('sekolah.manage') }}">Kelola Data</a>
-                        </li>
-                    @endauth
-                </ul>
-
-                <ul class="navbar-nav ms-auto"> {{-- Bagian untuk Login/Register/Profil --}}
-                    @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">Register</a>
-                        </li>
-                    @else
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profil</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); this.closest('form').submit();">
-                                            Logout
-                                        </a>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endguest
                 </ul>
             </div>
         </div>
