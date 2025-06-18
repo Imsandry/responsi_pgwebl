@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Peta Sekolah - WebGIS Pendidikan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app') {{-- Meng-extend template app.blade.php --}}
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <style>
+@push('styles') {{-- Dorong CSS ini ke bagian head dari app.blade.php --}}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
     #map {
-      height: 100vh;
+      height: calc(100vh - 56px - 60px); /* Kurangi tinggi navbar dan footer */
+      width: 100%;
     }
 
     .leaflet-div-icon {
@@ -29,16 +21,17 @@
       border-radius: 5px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
-  </style>
-</head>
-<body>
+</style>
+@endpush
 
-  <div id="map"></div>
+@section('content') {{-- Konten utama halaman WebGIS --}}
+<div id="map"></div>
+@endsection
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+@push('scripts') {{-- Dorong JS ini ke bagian bawah body dari app.blade.php --}}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <script>
+<script>
     const map = L.map('map').setView([5.889, 95.316], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -67,7 +60,5 @@
         }).addTo(map);
       })
       .catch(error => console.error(error));
-  </script>
-
-</body>
-</html>
+</script>
+@endpush
