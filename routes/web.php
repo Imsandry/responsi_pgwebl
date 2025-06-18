@@ -1,20 +1,20 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MapController;
 
+// Landing page
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('landing');
+})->name('landing');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Halaman WebGIS (menampilkan peta)
+Route::get('/webgis', [MapController::class, 'index'])->name('map.view');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Endpoint data sekolah dalam format GeoJSON
+Route::get('/webgis/data', [MapController::class, 'data'])->name('map.data');
 
-require __DIR__.'/auth.php';
+// (Opsional) Jika kamu pakai Laravel Auth:
+// Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+// Auth::routes(); // Jika pakai Laravel UI atau Breeze
+
